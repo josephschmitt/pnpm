@@ -333,7 +333,7 @@ export async function handler (
 
   const workspacePackages = opts.workspaceDir
     ? arrayOfWorkspacePackagesToMap(
-      await findWorkspacePackages(opts.workspaceDir, opts),
+      opts.allProjects ?? await findWorkspacePackages(opts.workspaceDir, opts),
     )
     : undefined
 
@@ -406,7 +406,7 @@ export async function handler (
   if (opts.linkWorkspacePackages && opts.workspaceDir) {
     // TODO: reuse somehow the previous read of packages
     // this is not optimal
-    const allProjects = await findWorkspacePackages(opts.workspaceDir, opts)
+    const allProjects = opts.allProjects ?? await findWorkspacePackages(opts.workspaceDir, opts)
     const selectedProjectsGraph = await filterPkgsBySelectorObjects(allProjects, [
       {
         excludeSelf: true,
